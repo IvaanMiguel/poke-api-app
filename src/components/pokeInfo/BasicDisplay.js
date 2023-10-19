@@ -8,8 +8,15 @@ import {
 } from '@gluestack-ui/themed'
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
+import Awaiting from '../Awaiting'
 
-const BasicDisplay = props => {
+const BasicDisplay = ({
+  id = 1,
+  order = 0,
+  name = 'Bulbasaur placeholder',
+  types = [],
+  genus = ''
+} = {}) => {
   const color = useSelector(state => state.pokeColor)
   const { pokeColor } = color
 
@@ -28,22 +35,40 @@ const BasicDisplay = props => {
           bgColor={ `$${pokeColor}300` }
           px='$2'
           borderRadius='$md'
-          borderWidth='$1'
-          borderColor={ `$${pokeColor}400` }
         >
           <Heading size='xl' color={ `$${pokeColor}800` }>
-            { props.pokeName }
+            { name }
           </Heading>
           <Text color={ `$${pokeColor}800` }>
-            #{ `${props.pokeOrder}`.padStart(3, '0') }
+            #{ `${order}`.padStart(3, '0') }
           </Text>
         </HStack>
-        <PokeTypes types={ props.pokeTypes } color={ pokeColor } />
+        <VStack space='xs'>
+          <Awaiting
+            spinnerProps={{
+              alignItems: 'start'
+            }}
+            awaitingProp={ genus }
+            component={
+              <Text size='sm' color={ `$${pokeColor}800` }>
+                { genus }
+              </Text>
+            }
+          />
+          <PokeTypes types={ types } color={ pokeColor } />
+        </VStack>
       </VStack>
-      <Box p='$2' bgColor={ `$${pokeColor}100` } borderRadius='$full'>
+      <Box
+        p='$2'
+        bgColor={ `$${pokeColor}100` }
+        borderRadius='$full'
+        justifyContent='center'
+      >
         <Image
           size='md'
-          source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${props.pokeId}.png` }}
+          source={{
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+          }}
           alt='Pokemon image.'
         />
       </Box>
