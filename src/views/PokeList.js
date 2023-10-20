@@ -6,6 +6,7 @@ import {
 import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
 import PokeCard from '../components/PokeCard'
+import Awaiting from '../components/Awaiting'
 
 const Pokedex = new PokeAPI()
 
@@ -18,18 +19,6 @@ const PokeList = ({ route }) => {
 
   const fetchGenerationPokemons = async () => {
     const generation =  await Pokedex.getGenerationByName(id)
-
-    // const _pokemons = generation.pokemon_species.map(species => {
-    //   return {
-    //     name: species.name,
-    //     id: species.url.match(/\/(\d+)\/$/)[1]
-    //   }
-    // })
-
-    // setPokemons(_pokemons)
-
-    // console.log(ids);
-
     let _pokemons = []
 
     generation.pokemon_species.forEach(async species => {
@@ -47,7 +36,7 @@ const PokeList = ({ route }) => {
       <FlatList
         p='$2'
         data={ pokemons }
-        renderItem={ e => <PokeCard /* id={ e.item.id } name={ e.item.name } */ name={ e.item.name } color={ e.item.color } /> }
+        renderItem={ e => <PokeCard name={ e.item.name } color={ e.item.color } /> }
         ItemSeparatorComponent={() => <Box height='$1' />}
       />
     </View>
