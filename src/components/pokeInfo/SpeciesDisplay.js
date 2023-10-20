@@ -22,20 +22,19 @@ const SpeciesDisplay = ({
       <Awaiting
         size='large'
         awaitingProp={ description }
-        component={
-          <Text
-            p='$3'
-            borderColor={ `$warmGray300` }
-            borderWidth='$1'
-            borderRadius='$md'
-            size='sm'
-            textAlign='center'
-            color='$warmGray500'
-          >
-            { description }
-          </Text>
-        }
-      />
+      >
+        <Text
+          p='$3'
+          borderColor={ `$warmGray300` }
+          borderWidth='$1'
+          borderRadius='$md'
+          size='sm'
+          textAlign='center'
+          color='$warmGray500'
+        >
+          { description }
+        </Text>
+      </Awaiting>
       <HStack space='md'>
         <VStack flexGrow='1' space='xs'>
           <Heading
