@@ -3,11 +3,11 @@ import {
   HStack,
   Heading,
   Image,
+  Pressable,
   VStack
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
-import { Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { setColor } from '../redux/pokeColorReducer'
@@ -28,11 +28,6 @@ const PokeCard = ({ name = '', color = '' } = {}) => {
   const fetchPokeInfo = async () => {
     const pokemon = await Pokedex.getPokemonByName(name)
     setPokeInfo(pokemon)
-
-    const a = await Pokedex.getTypeByName(15)
-    console.log(a);
-    const b = await Pokedex.getTypesList()
-    console.log(b);
   }
 
   return (
