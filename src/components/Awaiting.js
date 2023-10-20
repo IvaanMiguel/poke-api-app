@@ -2,14 +2,14 @@ import { Spinner } from '@gluestack-ui/themed'
 
 const Awaiting = ({
   awaitingProp = null,
-  component = null,
   size = 'small',
-  spinnerProps = {}
+  spinnerProps = {},
+  children
 } = {}) => {
   return (
     <>
       { awaitingProp ? (
-        component
+        children
       ) : (
         <Spinner { ...spinnerProps } size={ size } />
       ) }
