@@ -28,7 +28,10 @@ const BasicDisplay = ({
       bgColor={ `$${pokeColor}200` }
       space='lg'
     >
-      <VStack flexGrow='1' space='md'>
+      <VStack
+        flexGrow='1'
+        space='md'
+      >
         <HStack
           alignItems='center'
           justifyContent='space-between'
@@ -36,7 +39,10 @@ const BasicDisplay = ({
           px='$2'
           borderRadius='$md'
         >
-          <Heading size='xl' color={ `$${pokeColor}800` }>
+          <Heading
+            size='xl'
+            color={ `$${pokeColor}800` }
+          >
             { name }
           </Heading>
           <Text color={ `$${pokeColor}800` }>
@@ -49,12 +55,14 @@ const BasicDisplay = ({
               alignItems: 'start'
             }}
             awaitingProp={ genus }
-            component={
-              <Text size='sm' color={ `$${pokeColor}800` }>
-                { genus }
-              </Text>
-            }
-          />
+          >
+            <Text
+              size='sm'
+              color={ `$${pokeColor}800` }
+            >
+              { genus }
+            </Text>
+          </Awaiting>
           <PokeTypes types={ types } color={ pokeColor } />
         </VStack>
       </VStack>
