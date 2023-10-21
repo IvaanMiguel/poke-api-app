@@ -20,3 +20,10 @@ export const statsNames = {
   accuracy: 'Accuracy',
   evasion: 'Evasion'
 }
+
+export const themeColors = {
+  brown: 'orange',
+  gray: 'secondary',
+  black: 'blueGray',
+  white: 'trueGray'
+}
