@@ -1,12 +1,12 @@
 import {
   Box,
   FlatList,
-  View
+  ScrollView,
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
 import PokeCard from '../components/PokeCard'
-import Awaiting from '../components/Awaiting'
+import { themeColors } from '../constants'
 
 const Pokedex = new PokeAPI()
 
@@ -32,14 +32,19 @@ const PokeList = ({ route }) => {
   }
 
   return (
-    <View>
+    <ScrollView>
       <FlatList
-        p='$2'
+        p='$1'
         data={ pokemons }
-        renderItem={ e => <PokeCard name={ e.item.name } color={ e.item.color } /> }
-        ItemSeparatorComponent={() => <Box height='$1' />}
+        renderItem={ e => (
+          <PokeCard
+            name={ e.item.name }
+            color={ themeColors[e.item.color] ?? e.item.color }
+          />
+        ) }
+        ItemSeparatorComponent={() => <Box height='$2' />}
       />
-    </View>
+    </ScrollView>
   )
 }
 
