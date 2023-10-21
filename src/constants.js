@@ -9,3 +9,14 @@ export const generations = [
   { name: 'VIII Generación' },
   { name: 'IX Generación' },
 ]
+
+export const statsNames = {
+  attack: 'Attack',
+  hp: 'HP',
+  defense: 'Defense',
+  'special-attack': 'Sp. Attack',
+  'special-defense': 'Sp. Defense',
+  speed: 'Speed',
+  accuracy: 'Accuracy',
+  evasion: 'Evasion'
+}
