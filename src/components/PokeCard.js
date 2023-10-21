@@ -1,10 +1,11 @@
 import {
-  Box,
+  Center,
   HStack,
   Heading,
   Image,
   Pressable,
-  VStack
+  VStack,
+  View
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
@@ -34,7 +35,6 @@ const PokeCard = ({ name = '', color = '' } = {}) => {
     <Pressable
       onPress={() => {
         dispatch(setColor({ color: color }))
-
         navigation.navigate('PokeInfo', { pokeInfo: pokeInfo })
       }}
     >
@@ -50,20 +50,20 @@ const PokeCard = ({ name = '', color = '' } = {}) => {
             alignItems='center'
           >
             { pokeInfo.id ? (
-              <Box
-                p='$2'
-                bgColor={ `$${color}100` }
-                borderRadius='$full'
-                borderColor={ `$${color}600` }
-              >
+              <Center>
+                <View
+                  position='absolute'
+                  w={ 70 } h={ 70 }
+                  bgColor={ `$${color}100` }
+                  borderRadius='$full'
+                />
                 <Image
-                  size='sm'
                   source={{
                     uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeInfo.id}.png`
                   }}
                   alt='Pokemon image.'
                 />
-              </Box>
+              </Center>
             ) : null }
             <VStack space='md'>
               <Heading size='md' color={ `$${color}800` }>

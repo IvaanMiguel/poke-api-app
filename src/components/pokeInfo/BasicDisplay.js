@@ -1,10 +1,11 @@
 import {
-  Box,
+  Center,
   HStack,
   Heading,
   Image,
   Text,
-  VStack
+  VStack,
+  View
 } from '@gluestack-ui/themed'
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
@@ -66,20 +67,21 @@ const BasicDisplay = ({
           <PokeTypes types={ types } color={ pokeColor } />
         </VStack>
       </VStack>
-      <Box
-        p='$2'
-        bgColor={ `$${pokeColor}100` }
-        borderRadius='$full'
-        justifyContent='center'
-      >
+      <Center>
+        <View
+          position='absolute'
+          w={ 90 } h={ 90 }
+          bgColor={ `$${pokeColor}100` }
+          borderRadius='$full'
+        />
         <Image
-          size='md'
+          size='lg'
           source={{
             uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
           }}
           alt='Pokemon image.'
         />
-      </Box>
+      </Center>
     </HStack>
   )
 }
