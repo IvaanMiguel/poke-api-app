@@ -17,7 +17,7 @@ import Awaiting from './Awaiting'
 
 const Pokedex = new PokeAPI()
 
-const PokeCard = ({ name = '', color = '' } = {}) => {
+const PokeCard = ({ id = 0, name = '', color = '' } = {}) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
@@ -28,7 +28,7 @@ const PokeCard = ({ name = '', color = '' } = {}) => {
   }, [])
 
   const fetchPokeInfo = async () => {
-    const pokemon = await Pokedex.getPokemonByName(name)
+    const pokemon = await Pokedex.getPokemonByName(id)
     setPokeInfo(pokemon)
   }
 
@@ -50,39 +50,36 @@ const PokeCard = ({ name = '', color = '' } = {}) => {
             bgColor={ `$${color}${ pressed ? '400' : hovered ? '300' : '200' }` }
             alignItems='center'
           >
-            <Awaiting
-              awaitingProp={ Object.keys(pokeInfo).length }
-              spinnerProps={{
-                w: '$full',
-                textAlign: 'center'
-              }}
-            >
-              { pokeInfo.id ? (
-                <Center>
-                  <View
-                    position='absolute'
-                    w={ 70 } h={ 70 }
-                    bgColor={ `$${color}100` }
-                    borderRadius='$full'
-                  />
-                  <Image
-                    source={{
-                      uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeInfo.id}.png`
-                    }}
-                    alt='Pokemon image.'
-                  />
-                </Center>
-              ) : null }
-              <VStack space='md'>
-                <Heading size='md' color={ `$${color}800` }>
-                  { pokeInfo.name }
-                </Heading>
+            <Center>
+              <View
+                position='absolute'
+                w={ 70 } h={ 70 }
+                bgColor={ `$${color}100` }
+                borderRadius='$full'
+              />
+              <Image
+                source={{
+                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+                }}
+                alt='Pokemon image.'
+              />
+            </Center>
+            <VStack space='md'>
+              <Heading size='md' color={ `$${color}800` }>
+                { name }
+              </Heading>
+              <Awaiting
+                awaitingProp={ Object.keys(pokeInfo).length }
+                spinnerProps={{
+                  alignItems: 'start'
+                }}
+              >
                 { pokeInfo.types ? (
                   <PokeTypes types={ pokeInfo.types } color={ color } />
                 ) : null }
-              </VStack>
-            </Awaiting>
-          </HStack>          
+              </Awaiting>
+            </VStack>
+          </HStack>
         )
       }}
     </Pressable>
