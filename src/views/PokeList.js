@@ -1,7 +1,6 @@
 import {
   Box,
   FlatList,
-  ScrollView,
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
@@ -21,30 +20,35 @@ const PokeList = ({ route }) => {
     const generation =  await Pokedex.getGenerationByName(id)
     let _pokemons = []
 
-    generation.pokemon_species.forEach(async species => {
-      const pokemonSpecies = await Pokedex.getPokemonSpeciesByName(species.name)
-      const defaultPokemon = pokemonSpecies.varieties.find(variety => variety.is_default)
-      const { name }  = defaultPokemon.pokemon
+    const speciesId = generation.pokemon_species.map(species => {
+      return species.url.match(/\/(\d+)\/$/)[1]
+    })
 
-      _pokemons = [..._pokemons, { name: name, color: pokemonSpecies.color.name }]
+    speciesId.forEach(async _speciesId => {
+      const pokemonSpecies = await Pokedex.getPokemonSpeciesByName(_speciesId)
+
+      _pokemons = [..._pokemons, {
+        id: _speciesId,
+        name: pokemonSpecies.names.find(name => name.language.name === 'en').name,
+        color: pokemonSpecies.color.name
+      }]
       setPokemons([..._pokemons])
     })
   }
 
   return (
-    <ScrollView>
-      <FlatList
-        p='$1'
-        data={ pokemons }
-        renderItem={ e => (
-          <PokeCard
-            name={ e.item.name }
-            color={ themeColors[e.item.color] ?? e.item.color }
-          />
-        ) }
-        ItemSeparatorComponent={() => <Box height='$2' />}
-      />
-    </ScrollView>
+    <FlatList
+      p='$1'
+      data={ pokemons }
+      renderItem={ e => (
+        <PokeCard
+          id={ e.item.id }
+          name={ e.item.name }
+          color={ themeColors[e.item.color] ?? e.item.color }
+        />
+      ) }
+      ItemSeparatorComponent={() => <Box height='$2' />}
+    />
   )
 }
 
