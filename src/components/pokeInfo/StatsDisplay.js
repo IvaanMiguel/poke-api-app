@@ -12,11 +12,11 @@ import { statsNames } from '../../constants'
 
 const StatBar = ({
   value = 0,
-  max = 0,
+  max = 100,
   label = ''
 }) => {
-  const color = useSelector(state => state.pokeColor)
-  const { pokeColor } = color
+  const pokemon = useSelector(state => state.pokemon)
+  const { color } = pokemon
 
   const [barWidth, setBarWidth] = useState(0)
 
@@ -33,12 +33,12 @@ const StatBar = ({
         minWidth={ 90 }
         borderTopLeftRadius='$md'
         borderBottomLeftRadius='$md'
-        bgColor={ `$${pokeColor}300` }
+        bgColor={ `$${ color }300` }
       >
         <Text
           textAlign='center'
           size='xs'
-          color={ `$${pokeColor}800` }
+          color={ `$${ color }800` }
           isTruncated
           fontWeight={ 500 }
         >
@@ -50,7 +50,7 @@ const StatBar = ({
           py='$1' px='$3'
           w={ `${barWidth}%` }
           minWidth={ 40 }
-          bgColor={ `$${pokeColor}200` }
+          bgColor={ `$${ color }200` }
           borderTopRightRadius='$md'
           borderBottomRightRadius='$md'
           justifyContent='center'
@@ -58,7 +58,7 @@ const StatBar = ({
         >
           <Text
             textAlign='right'
-            color={ `$${pokeColor}800` }
+            color={ `$${ color }800` }
             size='sm'
           >
             { value }

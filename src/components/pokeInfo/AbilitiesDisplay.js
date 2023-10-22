@@ -15,11 +15,9 @@ import Awaiting from '../Awaiting'
 
 const Pokedex = new PokeAPI()
 
-const AbilitiesDisplay = ({
-  abilitiesInfo = []
-} = {}) => {
-  const color = useSelector(state => state.pokeColor)
-  const { pokeColor } = color
+const AbilitiesDisplay = ({ abilitiesInfo = [] }) => {
+  const pokemon = useSelector(state => state.pokemon)
+  const { color } = pokemon
 
   const [abilities, setAbilities] = useState()
 
@@ -42,20 +40,20 @@ const AbilitiesDisplay = ({
           return <Pressable
             key={ i }
             borderWidth='$1'
-            borderColor={ `$${pokeColor}600` }
+            borderColor={ `$${color}600` }
             borderRadius='$md'
             overflow='hidden'
           >
             {({ hovered, pressed }) => {
               return <HStack
                 borderRadius='$md'
-                bgColor={ `$${pokeColor}${ pressed ? '400' : hovered ? '300' : '200' }` }
+                bgColor={ `$${color}${ pressed ? '400' : hovered ? '300' : '200' }` }
                 alignItems='center'
               >
                 { abilitiesInfo[i].isHidden ? (
                   <Center
                     px='$3' py='$1'
-                    bgColor={ `$${pokeColor}800` }
+                    bgColor={ `$${color}800` }
                     position='absolute'
                   >
                     <Text color='white' size='xs'>Hidden</Text>
@@ -65,7 +63,7 @@ const AbilitiesDisplay = ({
                   p='$1'
                   size='sm'
                   textAlign='center'
-                  color={ `$${pokeColor}800` }
+                  color={ `$${color}800` }
                   fontWeight='$500'
                   flexGrow={ 1 }
                 >
@@ -76,7 +74,7 @@ const AbilitiesDisplay = ({
                   size='sm'
                   position='absolute'
                   right='$1'
-                  color={ `$${pokeColor}800` }
+                  color={ `$${color}800` }
                 />
               </HStack>
             }}

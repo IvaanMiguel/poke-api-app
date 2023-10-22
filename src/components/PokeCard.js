@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import PokeAPI from 'pokedex-promise-v2'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { setColor } from '../redux/pokeColorReducer'
+import { setColor, setName } from '../redux/pokemon'
 import PokeTypes from './PokeTypes'
 import Awaiting from './Awaiting'
 
@@ -35,7 +35,8 @@ const PokeCard = ({ id = 0, name = '', color = '' } = {}) => {
   return (
     <Pressable
       onPress={() => {
-        dispatch(setColor({ color: color }))
+        dispatch(setColor(color))
+        dispatch(setName(name))
         navigation.navigate('PokeInfo', { pokeInfo: pokeInfo })
       }}
     >
@@ -65,7 +66,7 @@ const PokeCard = ({ id = 0, name = '', color = '' } = {}) => {
               />
             </Center>
             <VStack space='md'>
-              <Heading size='md' color={ `$${color}800` }>
+              <Heading size='md' color={ `$${ color }800` }>
                 { name }
               </Heading>
               <Awaiting

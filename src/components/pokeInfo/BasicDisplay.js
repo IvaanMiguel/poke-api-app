@@ -14,19 +14,18 @@ import Awaiting from '../Awaiting'
 const BasicDisplay = ({
   id = 1,
   order = 0,
-  name = 'Bulbasaur placeholder',
   types = [],
   genus = ''
-} = {}) => {
-  const color = useSelector(state => state.pokeColor)
-  const { pokeColor } = color
+}) => {
+  const pokemon = useSelector(state => state.pokemon)
+  const { color, name } = pokemon
 
   return (
     <HStack
       p='$4'
       borderRadius='$md'
       justifyContent='space-between' 
-      bgColor={ `$${pokeColor}200` }
+      bgColor={ `$${ color }200` }
       space='lg'
     >
       <VStack
@@ -36,17 +35,17 @@ const BasicDisplay = ({
         <HStack
           alignItems='center'
           justifyContent='space-between'
-          bgColor={ `$${pokeColor}300` }
+          bgColor={ `$${ color }300` }
           px='$2'
           borderRadius='$md'
         >
           <Heading
             size='xl'
-            color={ `$${pokeColor}800` }
+            color={ `$${ color }800` }
           >
             { name }
           </Heading>
-          <Text color={ `$${pokeColor}800` }>
+          <Text color={ `$${ color }800` }>
             #{ `${order}`.padStart(3, '0') }
           </Text>
         </HStack>
@@ -59,19 +58,19 @@ const BasicDisplay = ({
           >
             <Text
               size='sm'
-              color={ `$${pokeColor}800` }
+              color={ `$${ color }800` }
             >
               { genus }
             </Text>
           </Awaiting>
-          <PokeTypes types={ types } color={ pokeColor } />
+          <PokeTypes types={ types } color={ color } />
         </VStack>
       </VStack>
       <Center>
         <View
           position='absolute'
           w={ 90 } h={ 90 }
-          bgColor={ `$${pokeColor}100` }
+          bgColor={ `$${ color }100` }
           borderRadius='$full'
         />
         <Image
