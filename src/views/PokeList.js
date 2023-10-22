@@ -14,27 +14,29 @@ const PokeList = ({ route }) => {
 
   const [pokemons, setPokemons] = useState([])
 
-  useEffect(() => { fetchGenerationPokemons() }, [])
+  useEffect(() => {
+    const fetchGenerationPokemons = async () => {
+      const generation =  await Pokedex.getGenerationByName(id)
+  
+      const speciesId = generation.pokemon_species.map(species => {
+        return species.url.match(/\/(\d+)\/$/)[1]
+      })
+  
+      const pokePromises = await Promise.all(speciesId.map(async _speciesId => {
+        const pokemonSpecies = await Pokedex.getPokemonSpeciesByName(_speciesId)
+  
+        return {
+          id: _speciesId,
+          name: pokemonSpecies.names.find(name => name.language.name === 'en').name,
+          color: pokemonSpecies.color.name
+        }
+      }))
+  
+      setPokemons(pokePromises)
+    }
 
-  const fetchGenerationPokemons = async () => {
-    const generation =  await Pokedex.getGenerationByName(id)
-    let _pokemons = []
-
-    const speciesId = generation.pokemon_species.map(species => {
-      return species.url.match(/\/(\d+)\/$/)[1]
-    })
-
-    speciesId.forEach(async _speciesId => {
-      const pokemonSpecies = await Pokedex.getPokemonSpeciesByName(_speciesId)
-
-      _pokemons = [..._pokemons, {
-        id: _speciesId,
-        name: pokemonSpecies.names.find(name => name.language.name === 'en').name,
-        color: pokemonSpecies.color.name
-      }]
-      setPokemons([..._pokemons])
-    })
-  }
+    fetchGenerationPokemons()
+  }, [])
 
   return (
     <FlatList
