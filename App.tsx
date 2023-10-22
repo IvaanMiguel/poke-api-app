@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { Provider } from 'react-redux'
 
-import { store } from './src/redux/strore'
+import { store } from './src/redux/store'
 
 import Home from './src/views/Home'
 import PokeList from './src/views/PokeList'
