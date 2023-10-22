@@ -3,24 +3,24 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   color: 'red',
   name: 'Unknown name',
-  info: null
+  info: null,
+  species: null
 }
 
 export const pokemonSlice = createSlice({
   name: 'pokemon',
   initialState,
   reducers: {
-    setColor: (state, action) => {
-      state.color = action.payload
-    },
-    setName: (state, action) => {
-      state.name = action.payload
-    },
-    setInfo: (state, action) => {
-      state.info = action.payload
+    setPokemon: (state, action) => {
+      const { name, color, info, species } = action.payload
+
+      state.name = name
+      state.color = color
+      state.info = info
+      state.species = species
     }
   }
 })
 
-export const { setColor, setName, setInfo } = pokemonSlice.actions
+export const { setPokemon } = pokemonSlice.actions
 export default pokemonSlice.reducer
