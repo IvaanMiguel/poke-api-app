@@ -18,7 +18,7 @@ const StatBar = ({
   const color = useSelector(state => state.pokeColor)
   const { pokeColor } = color
 
-  const [barWidth, setBarWidth] = useState()
+  const [barWidth, setBarWidth] = useState(0)
 
   useEffect(() => {
     setBarWidth((value / max * 100).toFixed(1))
@@ -28,7 +28,7 @@ const StatBar = ({
     <HStack>
       <Center
         p='$1'
-        w='20%'
+        w='$1/5'
         maxWidth={ 150 }
         minWidth={ 90 }
         borderTopLeftRadius='$md'
@@ -45,12 +45,11 @@ const StatBar = ({
           { label }
         </Text>
       </Center>
-      <Box flexGrow='1'>
+      <Box flexGrow={ 1 }>
         <Box
           py='$1' px='$3'
-          h='100%'
           w={ `${barWidth}%` }
-          minWidth='fit-content'
+          minWidth={ 40 }
           bgColor={ `$${pokeColor}200` }
           borderTopRightRadius='$md'
           borderBottomRightRadius='$md'
@@ -58,7 +57,7 @@ const StatBar = ({
           alignItems='end'
         >
           <Text
-            textAlign='end'
+            textAlign='right'
             color={ `$${pokeColor}800` }
             size='sm'
           >

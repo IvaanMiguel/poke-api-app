@@ -28,8 +28,6 @@ const AbilitiesDisplay = ({
   const fetchAbilities = async () => {
     const abilitiesRes = await Pokedex.getAbilityByName(abilitiesInfo.map(ability => ability.name))
     setAbilities(abilitiesRes)
-
-    console.log(abilitiesRes);
   }
 
   return (
@@ -69,7 +67,7 @@ const AbilitiesDisplay = ({
                   textAlign='center'
                   color={ `$${pokeColor}800` }
                   fontWeight='$500'
-                  flexGrow='1'
+                  flexGrow={ 1 }
                 >
                   { ability.names.find(name => name.language.name === 'en').name }
                 </Text>

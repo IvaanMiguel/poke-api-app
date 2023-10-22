@@ -36,7 +36,7 @@ const SpeciesDisplay = ({
         </Text>
       </Awaiting>
       <HStack space='md'>
-        <VStack flexGrow='1' space='xs'>
+        <VStack flexGrow={ 1 } space='xs'>
           <Heading
             size='xs'
             textAlign='center'
@@ -55,7 +55,7 @@ const SpeciesDisplay = ({
             { height / 10 } m
           </Text>
         </VStack>
-        <VStack flexGrow='1' space='xs'>
+        <VStack flexGrow={ 1 } space='xs'>
           <Heading
             size='xs'
             textAlign='center'

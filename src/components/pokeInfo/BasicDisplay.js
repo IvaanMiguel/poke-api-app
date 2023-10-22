@@ -30,7 +30,7 @@ const BasicDisplay = ({
       space='lg'
     >
       <VStack
-        flexGrow='1'
+        flexGrow={ 1 }
         space='md'
       >
         <HStack
