@@ -14,8 +14,8 @@ const Pokedex = new PokeAPI()
 
 const PokeInfo = ({ route }) => {
   const pokeInfo = route.params.pokeInfo
-  const color = useSelector(state => state.pokeColor)
-  const { pokeColor } = color
+  const pokemon = useSelector(state => state.pokemon)
+  const { color } = pokemon
 
   const [species, setSpecies] = useState()
 
@@ -24,13 +24,11 @@ const PokeInfo = ({ route }) => {
   const fetchPokemonSpecies = async () => {
     const speciesRes = await Pokedex.getPokemonSpeciesByName(pokeInfo.name)
     setSpecies(speciesRes)
-
-    console.log(pokeInfo);
   }
 
   return (
     <VStack
-      bgColor={ `$${pokeColor}100` }
+      bgColor={ `$${ color }100` }
       h='100%'
     >
       <Awaiting awaitingProp={ species }>
