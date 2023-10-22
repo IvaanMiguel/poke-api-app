@@ -1,13 +1,13 @@
 export const generations = [
-  { name: 'I Generación' },
-  { name: 'II Generación' },
-  { name: 'III Generación' },
-  { name: 'IV Generación' },
-  { name: 'V Generación' },
-  { name: 'VI Generación' },
-  { name: 'VII Generación' },
-  { name: 'VIII Generación' },
-  { name: 'IX Generación' },
+  { name: 'Generation I' },
+  { name: 'Generation II' },
+  { name: 'Generation III' },
+  { name: 'Generation IV' },
+  { name: 'Generation V' },
+  { name: 'Generation VI' },
+  { name: 'Generation VII' },
+  { name: 'Generation VIII' },
+  { name: 'Generation IX' },
 ]
 
 export const statsNames = {
