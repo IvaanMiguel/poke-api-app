@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import pokeColorReducer from './pokeColorReducer'
+import pokemon from './pokemon'
 
 export const store = configureStore({
   reducer: {
-    pokeColor: pokeColorReducer
+    pokemon: pokemon
   }
 })
