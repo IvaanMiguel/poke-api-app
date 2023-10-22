@@ -9,16 +9,10 @@ import {
 } from '@gluestack-ui/themed'
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
-import Awaiting from '../Awaiting'
 
-const BasicDisplay = ({
-  id = 1,
-  order = 0,
-  types = [],
-  genus = ''
-}) => {
+const BasicDisplay = () => {
   const pokemon = useSelector(state => state.pokemon)
-  const { color, name } = pokemon
+  const { color, name, info, species } = pokemon
 
   return (
     <HStack
@@ -46,24 +40,17 @@ const BasicDisplay = ({
             { name }
           </Heading>
           <Text color={ `$${ color }800` }>
-            #{ `${order}`.padStart(3, '0') }
+            #{ `${ info.order }`.padStart(3, '0') }
           </Text>
         </HStack>
         <VStack space='xs'>
-          <Awaiting
-            spinnerProps={{
-              alignItems: 'start'
-            }}
-            awaitingProp={ genus }
+          <Text
+            size='sm'
+            color={ `$${ color }800` }
           >
-            <Text
-              size='sm'
-              color={ `$${ color }800` }
-            >
-              { genus }
-            </Text>
-          </Awaiting>
-          <PokeTypes types={ types } color={ color } />
+            { species.genera.find(genus => genus.language.name === 'en').genus }
+          </Text>
+          <PokeTypes types={ info.types } color={ color } />
         </VStack>
       </VStack>
       <Center>
@@ -76,7 +63,7 @@ const BasicDisplay = ({
         <Image
           size='lg'
           source={{
-            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${info.id}.png`
           }}
           alt='Pokemon image.'
         />

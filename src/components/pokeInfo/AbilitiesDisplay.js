@@ -15,16 +15,16 @@ import Awaiting from '../Awaiting'
 
 const Pokedex = new PokeAPI()
 
-const AbilitiesDisplay = ({ abilitiesInfo = [] }) => {
+const AbilitiesDisplay = () => {
   const pokemon = useSelector(state => state.pokemon)
-  const { color } = pokemon
+  const { color, info } = pokemon
 
   const [abilities, setAbilities] = useState()
 
   useEffect(() => { fetchAbilities() }, [])
 
   const fetchAbilities = async () => {
-    const abilitiesRes = await Pokedex.getAbilityByName(abilitiesInfo.map(ability => ability.name))
+    const abilitiesRes = await Pokedex.getAbilityByName(info.abilities.map(ability => ability.ability.name))
     setAbilities(abilitiesRes)
   }
 
@@ -40,20 +40,20 @@ const AbilitiesDisplay = ({ abilitiesInfo = [] }) => {
           return <Pressable
             key={ i }
             borderWidth='$1'
-            borderColor={ `$${color}600` }
+            borderColor={ `$${ color }600` }
             borderRadius='$md'
             overflow='hidden'
           >
             {({ hovered, pressed }) => {
               return <HStack
                 borderRadius='$md'
-                bgColor={ `$${color}${ pressed ? '400' : hovered ? '300' : '200' }` }
+                bgColor={ `$${ color }${ pressed ? '400' : hovered ? '300' : '200' }` }
                 alignItems='center'
               >
-                { abilitiesInfo[i].isHidden ? (
+                { info.abilities[i].is_hidden ? (
                   <Center
                     px='$3' py='$1'
-                    bgColor={ `$${color}800` }
+                    bgColor={ `$${ color }800` }
                     position='absolute'
                   >
                     <Text color='white' size='xs'>Hidden</Text>
@@ -63,7 +63,7 @@ const AbilitiesDisplay = ({ abilitiesInfo = [] }) => {
                   p='$1'
                   size='sm'
                   textAlign='center'
-                  color={ `$${color}800` }
+                  color={ `$${ color }800` }
                   fontWeight='$500'
                   flexGrow={ 1 }
                 >
@@ -74,7 +74,7 @@ const AbilitiesDisplay = ({ abilitiesInfo = [] }) => {
                   size='sm'
                   position='absolute'
                   right='$1'
-                  color={ `$${color}800` }
+                  color={ `$${ color }800` }
                 />
               </HStack>
             }}

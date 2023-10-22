@@ -4,14 +4,12 @@ import {
   Text,
   VStack
 } from '@gluestack-ui/themed'
-import Awaiting from '../Awaiting'
+import { useSelector } from 'react-redux'
 
-const SpeciesDisplay = ({
-  weight = 0,
-  height = 0,
-  description = ''
-} = {}) => {
-  
+const SpeciesDisplay = () => {
+  const pokemon = useSelector(state => state.pokemon)
+  const { info, species } = pokemon
+
   return (
     <VStack
       borderRadius='$md'
@@ -19,22 +17,19 @@ const SpeciesDisplay = ({
       p='$4'
       space='lg'
     >
-      <Awaiting
-        size='large'
-        awaitingProp={ description }
+      <Text
+        p='$3'
+        borderColor={ `$warmGray300` }
+        borderWidth='$1'
+        borderRadius='$md'
+        size='sm'
+        textAlign='center'
+        color='$warmGray500'
       >
-        <Text
-          p='$3'
-          borderColor={ `$warmGray300` }
-          borderWidth='$1'
-          borderRadius='$md'
-          size='sm'
-          textAlign='center'
-          color='$warmGray500'
-        >
-          { description }
-        </Text>
-      </Awaiting>
+        { species.flavor_text_entries
+            .findLast(text => text.language.name === 'en')?.flavor_text || ''
+            .replace(/[\n\f\r\t]/g, " ") }
+      </Text>
       <HStack space='md'>
         <VStack flexGrow={ 1 } space='xs'>
           <Heading
@@ -52,7 +47,7 @@ const SpeciesDisplay = ({
             color='$warmGray500'
             p='$2'
           >
-            { height / 10 } m
+            { info.height / 10 } m
           </Text>
         </VStack>
         <VStack flexGrow={ 1 } space='xs'>
@@ -71,7 +66,7 @@ const SpeciesDisplay = ({
             color='$warmGray500'
             p='$2'
           >
-            { weight / 10 } kg
+            { info.weight / 10 } kg
           </Text>
         </VStack>
       </HStack>

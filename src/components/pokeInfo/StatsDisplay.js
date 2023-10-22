@@ -69,11 +69,14 @@ const StatBar = ({
   )
 }
 
-const StatsDisplay = ({ stats = [] } = {}) => {
+const StatsDisplay = () => {
+  const pokemon = useSelector(state => state.pokemon)
+  const { info } = pokemon
+
   const [maxStat, setMaxStat] = useState()
 
   useEffect(() => {
-    setMaxStat(stats.reduce((maxValue, currentStat) => {
+    setMaxStat(info.stats.reduce((maxValue, currentStat) => {
       return Math.max(maxValue, currentStat.base_stat)
     }, 0))
   }, [])
@@ -85,7 +88,7 @@ const StatsDisplay = ({ stats = [] } = {}) => {
       p='$4'
       space='xs'
     >
-      { stats.map((stat, i) => (
+      { info.stats.map((stat, i) => (
         <StatBar
           key={ i }
           value={ stat.base_stat }
