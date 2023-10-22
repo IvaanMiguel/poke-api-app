@@ -3,14 +3,17 @@ import {
   FlatList,
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import PokeAPI from 'pokedex-promise-v2'
+
 import PokeCard from '../components/PokeCard'
 import { themeColors } from '../constants'
 
 const Pokedex = new PokeAPI()
 
-const PokeList = ({ route }) => {
-  const { id } = route.params
+const PokeList = () => {
+  const generation = useSelector(state => state.generation)
+  const { id } = generation
 
   const [pokemons, setPokemons] = useState([])
 
@@ -28,7 +31,8 @@ const PokeList = ({ route }) => {
         return {
           id: _speciesId,
           name: pokemonSpecies.names.find(name => name.language.name === 'en').name,
-          color: pokemonSpecies.color.name
+          color: pokemonSpecies.color.name,
+          species: pokemonSpecies
         }
       }))
   
@@ -47,6 +51,7 @@ const PokeList = ({ route }) => {
           id={ e.item.id }
           name={ e.item.name }
           color={ themeColors[e.item.color] ?? e.item.color }
+          species={ e.item.species }
         />
       ) }
       ItemSeparatorComponent={() => <Box height='$2' />}
