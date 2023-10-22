@@ -1,18 +1,25 @@
 import { Box, Pressable, Text } from '@gluestack-ui/themed'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
 
-const GenCard = props => {
+import { setGenerationId } from '../redux/generation'
+
+const GenCard = ({ name = 'Unknown Generation', id = 1 }) => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
   return (
     <Pressable
-      onPress={() => navigation.navigate('PokeList', { id: props.id })}
+      onPress={ () => {
+        dispatch(setGenerationId(id))
+        navigation.navigate('PokeList')
+      } }
       borderWidth='$2'
     >
       {({ pressed }) => {
         return (
           <Box p='$4' bgColor={ pressed ? '$indigo' : '$green' }>
-            <Text color='$white'>{ props.name }</Text>
+            <Text color='$white'>{ name }</Text>
           </Box>
         )
       }}
