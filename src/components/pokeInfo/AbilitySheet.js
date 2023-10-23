@@ -4,6 +4,7 @@ import {
   ActionsheetContent,
   ActionsheetDragIndicator,
   ActionsheetDragIndicatorWrapper,
+  ActionsheetScrollView,
   Center,
   Heading,
   Text,
@@ -46,7 +47,8 @@ const AbilitySheet = () => {
       <ActionsheetContent
         p={ 0 }
         zIndex={ 999 }
-        h='min-content'
+        h='fit-content'
+        maxHeight='$full'
         overflow='hidden'
       >
         <ActionsheetDragIndicatorWrapper
@@ -69,36 +71,38 @@ const AbilitySheet = () => {
                   textAlign='center'
                   color={ `$${ color }300` }
                 >
-                  { properName } { info.abilities[abilitySheetId].is_hidden ? 'hidden ' : '' }ability
+                  { properName } { info.abilities[abilitySheetId]?.is_hidden ? 'hidden ' : '' }ability
                 </Text>
               </VStack>
             ) : null }
           </Center>
         </ActionsheetDragIndicatorWrapper>
-        <Center w='$full' p='$4'>
-          <VStack
-            w='$full'
-            bgColor={ `$${ color }100` }
-            borderRadius='$md'
-            p='$4'
-            space='xs'
-          >
-            <Heading
-              textAlign='center'
-              size='sm'
-              color={ `$${ color }800` }
+        <ActionsheetScrollView>
+          <Center w='$full' p='$4'>
+            <VStack
+              w='$full'
+              bgColor={ `$${ color }100` }
+              borderRadius='$md'
+              p='$4'
+              space='xs'
             >
-              Effect
-            </Heading>
-            <Text
-              textAlign='center'
-              color={ `$${ color }800` }
-              size='sm'
-            >
-              { description }
-            </Text>
-          </VStack>
-        </Center>
+              <Heading
+                textAlign='center'
+                size='sm'
+                color={ `$${ color }800` }
+              >
+                Effect
+              </Heading>
+              <Text
+                textAlign='center'
+                color={ `$${ color }800` }
+                size='sm'
+              >
+                { description }
+              </Text>
+            </VStack>
+          </Center>
+        </ActionsheetScrollView>
       </ActionsheetContent>
     </Actionsheet>
   )
