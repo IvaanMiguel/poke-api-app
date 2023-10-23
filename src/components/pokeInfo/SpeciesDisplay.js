@@ -19,16 +19,16 @@ const SpeciesDisplay = () => {
     >
       <Text
         p='$3'
-        borderColor={ `$warmGray300` }
+        borderColor='$warmGray300'
         borderWidth='$1'
         borderRadius='$md'
         size='sm'
         textAlign='center'
         color='$warmGray500'
       >
-        { species.flavor_text_entries
-            .findLast(text => text.language.name === 'en')?.flavor_text || ''
-            .replace(/[\n\f\r\t]/g, " ") }
+        { (species.flavor_text_entries
+            .findLast(text => text.language.name === 'en')?.flavor_text || '')
+            .replace(/[\n\f\r\t]/g, ' ') }
       </Text>
       <HStack space='md'>
         <VStack flexGrow={ 1 } space='xs'>
