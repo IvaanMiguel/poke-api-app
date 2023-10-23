@@ -9,24 +9,35 @@ import {
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { setShowAbilitySheet } from '../../redux/abilitySheet'
 import PokeAPI from 'pokedex-promise-v2'
+
+import { setAbilities as setPokemonAbilities, } from '../../redux/pokemon'
+import { setAbilitySheetId } from '../../redux/abilitySheet'
 
 import Awaiting from '../Awaiting'
 
 const Pokedex = new PokeAPI()
 
 const AbilitiesDisplay = () => {
+  const dispatch = useDispatch()
   const pokemon = useSelector(state => state.pokemon)
   const { color, info } = pokemon
 
   const [abilities, setAbilities] = useState()
 
-  useEffect(() => { fetchAbilities() }, [])
+  useEffect(() => {
+    const fetchAbilities = async () => {
+      const abilitiesNames = info.abilities.map(ability => ability.ability.name)
+      const abilitiesRes = await Pokedex.getAbilityByName(abilitiesNames)
 
-  const fetchAbilities = async () => {
-    const abilitiesRes = await Pokedex.getAbilityByName(info.abilities.map(ability => ability.ability.name))
-    setAbilities(abilitiesRes)
-  }
+      setAbilities(abilitiesRes)
+      dispatch(setPokemonAbilities(abilitiesRes))
+    }
+
+    fetchAbilities()
+  }, [])
 
   return (
     <VStack
@@ -43,6 +54,10 @@ const AbilitiesDisplay = () => {
             borderColor={ `$${ color }600` }
             borderRadius='$md'
             overflow='hidden'
+            onPress={ () => {
+              dispatch(setShowAbilitySheet(true))
+              dispatch(setAbilitySheetId(i))
+            } }
           >
             {({ hovered, pressed }) => {
               return <HStack
