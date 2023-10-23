@@ -4,7 +4,8 @@ const initialState = {
   color: 'red',
   name: 'Unknown name',
   info: null,
-  species: null
+  species: null,
+  abilities: null
 }
 
 export const pokemonSlice = createSlice({
@@ -18,9 +19,12 @@ export const pokemonSlice = createSlice({
       state.color = color
       state.info = info
       state.species = species
+    },
+    setAbilities: (state, action) => {
+      state.abilities = action.payload
     }
   }
 })
 
-export const { setPokemon } = pokemonSlice.actions
+export const { setPokemon, setAbilities } = pokemonSlice.actions
 export default pokemonSlice.reducer
