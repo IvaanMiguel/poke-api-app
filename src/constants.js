@@ -1,15 +1,3 @@
-export const generations = [
-  { name: 'Generation I' },
-  { name: 'Generation II' },
-  { name: 'Generation III' },
-  { name: 'Generation IV' },
-  { name: 'Generation V' },
-  { name: 'Generation VI' },
-  { name: 'Generation VII' },
-  { name: 'Generation VIII' },
-  { name: 'Generation IX' },
-]
-
 export const statsNames = {
   attack: 'Attack',
   hp: 'HP',
