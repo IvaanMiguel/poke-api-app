@@ -15,7 +15,6 @@ const PokeTypes = ({ types = [], color = 'red' }) => {
           size='sm'
           borderRadius='$full'
           borderColor={ `$${ color }600` }
-          useSelect='none'
           bgColor={ `$${ color }100` }
         >
           <BadgeText

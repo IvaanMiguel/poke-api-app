@@ -14,7 +14,6 @@ const PokeImage = ({
 
   const onLayout = e => {
     const { width, height } = e.nativeEvent.layout
-
     setImageDimensions({ w: width, h: height })
   }
 
@@ -27,13 +26,13 @@ const PokeImage = ({
         borderRadius='$full'
       />
       <Image
-        { ...imageProps }
         onLayout={ onLayout }
         source={{
-          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${ id }.png`
         }}
         alt='Pokemon image.'
-      />
+        { ...imageProps }
+        />
     </Center>
   )
 }
