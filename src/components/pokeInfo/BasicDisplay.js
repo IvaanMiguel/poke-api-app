@@ -9,6 +9,7 @@ import {
 } from '@gluestack-ui/themed'
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
+import PokeImage from '../PokeImage'
 
 const BasicDisplay = () => {
   const pokemon = useSelector(state => state.pokemon)
@@ -53,21 +54,11 @@ const BasicDisplay = () => {
           <PokeTypes types={ info.types } color={ color } />
         </VStack>
       </VStack>
-      <Center>
-        <View
-          position='absolute'
-          w={ 90 } h={ 90 }
-          bgColor={ `$${ color }100` }
-          borderRadius='$full'
-        />
-        <Image
-          size='lg'
-          source={{
-            uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${info.id}.png`
-          }}
-          alt='Pokemon image.'
-        />
-      </Center>
+      <PokeImage
+        id={ info.id }
+        color={ color }
+        imageProps={{ size: 'lg' }}
+      />
     </HStack>
   )
 }

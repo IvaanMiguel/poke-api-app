@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { setPokemon } from '../redux/pokemon'
 import PokeTypes from './PokeTypes'
 import Awaiting from './Awaiting'
+import PokeImage from './PokeImage'
 
 const Pokedex = new PokeAPI()
 
@@ -61,20 +62,7 @@ const PokeCard = ({
             bgColor={ `$${color}${ pressed ? '400' : hovered ? '300' : '200' }` }
             alignItems='center'
           >
-            <Center>
-              <View
-                position='absolute'
-                w={ 70 } h={ 70 }
-                bgColor={ `$${color}100` }
-                borderRadius='$full'
-              />
-              <Image
-                source={{
-                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
-                }}
-                alt='Pokemon image.'
-              />
-            </Center>
+            <PokeImage id={ id } color={ color } />
             <VStack space='md'>
               <Heading size='md' color={ `$${ color }800` }>
                 { name }
