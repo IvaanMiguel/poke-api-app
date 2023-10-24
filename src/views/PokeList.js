@@ -1,6 +1,6 @@
 import {
   Box,
-  FlatList,
+  FlatList
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -12,31 +12,29 @@ import { themeColors } from '../constants'
 const Pokedex = new PokeAPI()
 
 const PokeList = () => {
-  const generation = useSelector(state => state.generation)
-  const { id } = generation
+  const generations = useSelector(state => state.generations)
+  const { currentGeneration, data } = generations
 
   const [pokemons, setPokemons] = useState([])
 
   useEffect(() => {
     const fetchGenerationPokemons = async () => {
-      const generation =  await Pokedex.getGenerationByName(id)
+      const generation = data[currentGeneration - 1]
   
       const speciesId = generation.pokemon_species.map(species => {
         return species.url.match(/\/(\d+)\/$/)[1]
       })
   
-      const pokePromises = await Promise.all(speciesId.map(async _speciesId => {
-        const pokemonSpecies = await Pokedex.getPokemonSpeciesByName(_speciesId)
-  
+      const species = await Pokedex.getPokemonSpeciesByName(speciesId)
+
+      setPokemons(species.map(species => {
         return {
-          id: _speciesId,
-          name: pokemonSpecies.names.find(name => name.language.name === 'en').name,
-          color: pokemonSpecies.color.name,
-          species: pokemonSpecies
+          id: species.id,
+          name: species.names.find(name => name.language.name === 'en').name,
+          color: species.color.name,
+          species: species
         }
       }))
-  
-      setPokemons(pokePromises)
     }
 
     fetchGenerationPokemons()

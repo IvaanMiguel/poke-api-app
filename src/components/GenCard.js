@@ -9,7 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 
-import { setGenerationId } from '../redux/generation'
+import { setCurrentGeneration } from '../redux/generations'
 import PokeImage from './PokeImage'
 
 const GenCard = ({
@@ -22,7 +22,7 @@ const GenCard = ({
   const dispatch = useDispatch()
 
   const onPress = () => {
-    dispatch(setGenerationId(id))
+    dispatch(setCurrentGeneration(id))
     navigation.navigate('PokeList')
   }
 

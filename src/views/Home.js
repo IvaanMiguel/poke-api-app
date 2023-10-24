@@ -1,17 +1,22 @@
 import {
   Box,
   ScrollView,
-  VStack
+  VStack,
+  View
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import PokeAPI from 'pokedex-promise-v2'
 
+import { setData } from '../redux/generations'
 import SearchBar from '../components/SearchBar'
 import GenCard from '../components/GenCard'
 
 const Pokedex = new PokeAPI()
 
 const Home = () => {
+  const dispatch = useDispatch()
+
   const [generations, setGenerations] = useState([])
 
   useEffect(() => {
@@ -19,6 +24,7 @@ const Home = () => {
       const generationsId = Array(9).fill().map((_, i) => i + 1)
       const generationsRes = await Pokedex.getGenerationByName(generationsId)
       setGenerations(generationsRes)
+      dispatch(setData(generationsRes))
     }
 
     fetchGenerations()
@@ -26,7 +32,9 @@ const Home = () => {
 
   return (
     <VStack height='$full'>
-      <SearchBar p='$4'/>
+      <View p='$4'>
+        <SearchBar/>
+      </View>
       <ScrollView>
         <Box
           px='$4' pb='$4'

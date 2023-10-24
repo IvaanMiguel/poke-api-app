@@ -3,20 +3,17 @@ import {
   InputField,
   InputIcon,
   InputSlot,
-  SearchIcon,
-  View
+  SearchIcon
 } from '@gluestack-ui/themed'
 
-const SearchBar = props => {
+const SearchBar = () => {
   return (
-    <View { ...props }>
-      <Input variant='rounded'>
-        <InputField placeholder='Search pokemon by name...' />
-        <InputSlot pr='$4'>
-          <InputIcon as={ SearchIcon } />
-        </InputSlot>
-      </Input>
-    </View>
+    <Input variant='rounded'>
+      <InputField placeholder='Search pokemon by name...' />
+      <InputSlot pr='$4'>
+        <InputIcon as={ SearchIcon } />
+      </InputSlot>
+    </Input>
   )
 }
 
