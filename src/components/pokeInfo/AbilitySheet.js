@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowAbilitySheet, setAbilitySheetId } from '../../redux/abilitySheet'
+import { getLocalizedString } from '../../utils'
 
 const AbilitySheet = () => {
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const AbilitySheet = () => {
   useEffect(() => {
     if (!abilities) return
 
-    setDescription(abilities[abilitySheetId].effect_entries.find(ability => ability.language.name === 'en').effect)
+    setDescription(getLocalizedString(abilities[abilitySheetId].effect_entries).effect)
   }, [abilitySheetId, abilities])
 
   useEffect(() => { dispatch(setAbilitySheetId(0)) }, [abilities])
@@ -64,7 +65,7 @@ const AbilitySheet = () => {
                   color='white'
                   textAlign='center'
                 >
-                  { abilities[abilitySheetId].names.find(name => name.language.name === 'en').name }
+                  { getLocalizedString(abilities[abilitySheetId].names).name }
                 </Heading>
                 <Text
                   size='xs'

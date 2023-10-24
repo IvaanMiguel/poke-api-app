@@ -17,6 +17,7 @@ import { setAbilities as setPokemonAbilities, } from '../../redux/pokemon'
 import { setAbilitySheetId } from '../../redux/abilitySheet'
 
 import Awaiting from '../Awaiting'
+import { getLocalizedString } from '../../utils'
 
 const Pokedex = new PokeAPI()
 
@@ -82,7 +83,7 @@ const AbilitiesDisplay = () => {
                   fontWeight='$500'
                   flexGrow={ 1 }
                 >
-                  { ability.names.find(name => name.language.name === 'en').name }
+                  { getLocalizedString(ability.names).name }
                 </Text>
                 <Icon
                   as={ InfoIcon }

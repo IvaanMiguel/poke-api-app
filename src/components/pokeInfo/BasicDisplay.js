@@ -10,6 +10,7 @@ import {
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
 import PokeImage from '../PokeImage'
+import { getLocalizedString } from '../../utils'
 
 const BasicDisplay = () => {
   const pokemon = useSelector(state => state.pokemon)
@@ -49,7 +50,7 @@ const BasicDisplay = () => {
             size='sm'
             color={ `$${ color }800` }
           >
-            { species.genera.find(genus => genus.language.name === 'en').genus }
+            { getLocalizedString(species.genera).genus }
           </Text>
           <PokeTypes types={ info.types } color={ color } />
         </VStack>
