@@ -3,11 +3,14 @@ import {
   BadgeText,
   HStack
 } from '@gluestack-ui/themed'
+import { useSelector } from 'react-redux'
 
-const PokeTypes = ({ types = [], color = 'red' }) => {
+const PokeTypes = ({ color = 'red', id }) => {
+  const pokedex = useSelector(state => state.pokedex)
+  
   return (
     <HStack space='sm'>
-      { types.map((type, i) => (
+      { pokedex.types[id]?.map((type, i) => (
         <Badge
           key={ i }
           px='$2' py='$1'
@@ -21,7 +24,7 @@ const PokeTypes = ({ types = [], color = 'red' }) => {
             color={ `$${ color }900` }
             fontWeight='$bold'
           >
-            { type.type.name }
+            { type }
           </BadgeText>
         </Badge>
       )) }

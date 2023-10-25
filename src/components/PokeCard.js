@@ -1,55 +1,30 @@
 import {
-  Center,
   HStack,
   Heading,
-  Image,
   Pressable,
-  VStack,
-  View
+  VStack
 } from '@gluestack-ui/themed'
-import { useEffect, useState } from 'react'
-import PokeAPI from 'pokedex-promise-v2'
 import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
-import { setPokemon } from '../redux/pokemon'
+import { useDispatch, useSelector } from 'react-redux'
+
 import PokeTypes from './PokeTypes'
-import Awaiting from './Awaiting'
 import PokeImage from './PokeImage'
 
-const Pokedex = new PokeAPI()
+import { setId } from '../redux/pokemon'
+import { formatName } from '../utils'
 
-const PokeCard = ({
-  id = 0,
-  name = '',
-  color = '',
-  species = null
-}) => {
+const PokeCard = ({ id = 0, name = 'Unknown name' }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
-
-  const [pokeInfo, setPokeInfo] = useState({})
-
-  useEffect(() => {
-    fetchPokeInfo()
-  }, [])
-
-  const fetchPokeInfo = async () => {
-    const pokemon = await Pokedex.getPokemonByName(id)
-    setPokeInfo(pokemon)
-  }
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[name]
 
   return (
     <Pressable
-      onPress={() => {
-        dispatch(setPokemon({
-          name: name,
-          color: color,
-          info: pokeInfo,
-          species: species
-        }))
-
+      onPress={ () => {
+        dispatch(setId(id))
         navigation.navigate('PokeInfo')
-      }}
+      } }
     >
       {({ pressed, hovered }) => {
         return (
@@ -65,18 +40,9 @@ const PokeCard = ({
             <PokeImage id={ id } color={ color } />
             <VStack space='md'>
               <Heading size='md' color={ `$${ color }800` }>
-                { name }
+                { formatName(name) }
               </Heading>
-              <Awaiting
-                awaitingProp={ Object.keys(pokeInfo).length }
-                spinnerProps={{
-                  alignItems: 'start'
-                }}
-              >
-                { pokeInfo.types ? (
-                  <PokeTypes types={ pokeInfo.types } color={ color } />
-                ) : null }
-              </Awaiting>
+              <PokeTypes id={ id } color={ color } />
             </VStack>
           </HStack>
         )

@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 
 const SectionContainer = ({ heading = '', children }) => {
   const pokemon = useSelector(state => state.pokemon)
-  const { color } = pokemon
+  const { species } = pokemon
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[species.name]
 
   return (
     <VStack space='xs'>
