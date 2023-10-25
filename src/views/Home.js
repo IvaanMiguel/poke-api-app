@@ -1,21 +1,27 @@
 import {
-  Box,
-  ScrollView,
+  FlatList,
   VStack,
   View
 } from '@gluestack-ui/themed'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PokeAPI from 'pokedex-promise-v2'
 
 import { setData } from '../redux/generations'
+import { setAllResults } from '../redux/search'
+import { setColors, setTypes } from '../redux/pokedex'
+
 import SearchBar from '../components/SearchBar'
 import GenCard from '../components/GenCard'
+import SearchList from '../components/SearchList'
+import { getIdFromUrl, getLocalizedString } from '../utils'
 
 const Pokedex = new PokeAPI()
 
 const Home = () => {
   const dispatch = useDispatch()
+  const search = useSelector(state => state.search)
+  const { searchText } = search
 
   const [generations, setGenerations] = useState([])
 
@@ -27,30 +33,57 @@ const Home = () => {
       dispatch(setData(generationsRes))
     }
 
+    const fetchPokemon = async () => {
+      const pokemons = await Pokedex.getPokemonSpeciesList()
+      dispatch(setAllResults(pokemons.results))
+    }
+
+    const fetchPokemonColors = async () => {
+      const colorsRes = await Pokedex.getPokemonColorByName(Array(10).fill().map((_, i) => i + 1))
+      dispatch(setColors(colorsRes))
+    }
+
+    const fetchPokemonTypes = async () => {
+      const typesRes = await Pokedex.getTypeByName(Array(18).fill().map((_, i) => i + 1))
+      dispatch(setTypes(typesRes))
+    }
+
     fetchGenerations()
+    fetchPokemon()
+    fetchPokemonColors()
+    fetchPokemonTypes()
   }, [])
+
+  const renderItem = useCallback(({ item }) => (
+    <GenCard
+      name={ getLocalizedString(item.names).name }
+      pokemon={ getIdFromUrl(item.pokemon_species[0].url) }
+      species={ item.pokemon_species.length }
+      id={ item.id }
+    />
+  ), [])
+
+  const ItemSeparatorComponent = useCallback(h => <View h={ `$${h}` } />, [])
+
+  const keyExtractor = item => `${item.id}`
 
   return (
     <VStack height='$full'>
       <View p='$4'>
         <SearchBar/>
       </View>
-      <ScrollView>
-        <Box
+      { !searchText ? (
+        <FlatList
           px='$4' pb='$4'
-          gap='$3'
-        >
-          { generations.map((generation, i) => (
-            <GenCard
-              key={ i }
-              name={ generation.names.find(name => name.language.name === 'en').name }
-              pokemon = { generation.pokemon_species[0].url.match(/\/(\d+)\/$/)[1] }
-              species = { generation.pokemon_species.length }
-              id={ generation.id }
-            />
-          )) }
-        </Box>
-      </ScrollView>
+          data={ generations }
+          renderItem={ renderItem }
+          keyExtractor = { keyExtractor }
+          ItemSeparatorComponent={ ItemSeparatorComponent(3) }
+          ListFooterComponent={ ItemSeparatorComponent(4) }
+        />
+      ) : (
+        <SearchList />
+      ) }
     </VStack>
   )
 }

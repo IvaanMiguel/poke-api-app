@@ -2,14 +2,11 @@ import {
   Box,
   FlatList
 } from '@gluestack-ui/themed'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import PokeAPI from 'pokedex-promise-v2'
 
 import PokeCard from '../components/PokeCard'
-import { themeColors } from '../constants'
-
-const Pokedex = new PokeAPI()
+import { getIdFromUrl } from '../utils'
 
 const PokeList = () => {
   const generations = useSelector(state => state.generations)
@@ -21,18 +18,10 @@ const PokeList = () => {
     const fetchGenerationPokemons = async () => {
       const generation = data[currentGeneration - 1]
   
-      const speciesId = generation.pokemon_species.map(species => {
-        return species.url.match(/\/(\d+)\/$/)[1]
-      })
-  
-      const species = await Pokedex.getPokemonSpeciesByName(speciesId)
-
-      setPokemons(species.map(species => {
+      setPokemons(generation.pokemon_species.map(species => {
         return {
-          id: species.id,
-          name: species.names.find(name => name.language.name === 'en').name,
-          color: species.color.name,
-          species: species
+          id: getIdFromUrl(species.url),
+          name: species.name
         }
       }))
     }
@@ -40,19 +29,27 @@ const PokeList = () => {
     fetchGenerationPokemons()
   }, [])
 
+  const renderItem = useCallback(({ item }) => (
+    <PokeCard
+      id={ item.id }
+      name={ item.name }
+    />
+  ), [])
+
+  const ItemSeparatorComponent = useCallback(() => <Box height='$2' />, [])
+
+  const keyExtractor = useCallback(item => `${item.id}`, [])
+
   return (
     <FlatList
       p='$1'
       data={ pokemons }
-      renderItem={ e => (
-        <PokeCard
-          id={ e.item.id }
-          name={ e.item.name }
-          color={ themeColors[e.item.color] ?? e.item.color }
-          species={ e.item.species }
-        />
-      ) }
-      ItemSeparatorComponent={() => <Box height='$2' />}
+      maxToRenderPerBatch={ 5 }
+      initialNumToRender={ 8 }
+      windowSize={ 11 }
+      renderItem={ renderItem }
+      ItemSeparatorComponent={ ItemSeparatorComponent }
+      keyExtractor={ keyExtractor }
     />
   )
 }
