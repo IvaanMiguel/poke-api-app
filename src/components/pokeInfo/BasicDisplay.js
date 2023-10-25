@@ -1,11 +1,8 @@
 import {
-  Center,
   HStack,
   Heading,
-  Image,
   Text,
-  VStack,
-  View
+  VStack
 } from '@gluestack-ui/themed'
 import { useSelector } from 'react-redux'
 import PokeTypes from '../PokeTypes'
@@ -14,7 +11,9 @@ import { getLocalizedString } from '../../utils'
 
 const BasicDisplay = () => {
   const pokemon = useSelector(state => state.pokemon)
-  const { color, name, info, species } = pokemon
+  const { name, info, species } = pokemon
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[species.name]
 
   return (
     <HStack
@@ -42,7 +41,7 @@ const BasicDisplay = () => {
             { name }
           </Heading>
           <Text color={ `$${ color }800` }>
-            #{ `${ info.order }`.padStart(3, '0') }
+            #{ `${ info?.order }`.padStart(3, '0') }
           </Text>
         </HStack>
         <VStack space='xs'>
@@ -50,13 +49,13 @@ const BasicDisplay = () => {
             size='sm'
             color={ `$${ color }800` }
           >
-            { getLocalizedString(species.genera).genus }
+            { getLocalizedString(species.genera)?.genus }
           </Text>
-          <PokeTypes types={ info.types } color={ color } />
+          <PokeTypes id={ species.id } color={ color } />
         </VStack>
       </VStack>
       <PokeImage
-        id={ info.id }
+        id={ info?.id }
         color={ color }
         imageProps={{ size: 'lg' }}
       />

@@ -12,15 +12,18 @@ import {
 } from '@gluestack-ui/themed'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { setShowAbilitySheet, setAbilitySheetId } from '../../redux/abilitySheet'
 import { getLocalizedString } from '../../utils'
 
 const AbilitySheet = () => {
   const dispatch = useDispatch()
   const pokemon = useSelector(state => state.pokemon)
+  const { name, abilities, info, species } = pokemon
   const abilitySheet = useSelector(state => state.abilitySheet)
-  const { color, name, abilities, info } = pokemon
   const { showAbilitySheet, abilitySheetId } = abilitySheet
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[species?.name]
 
   const [properName, setProperName] = useState('')
   const [description, setDescription] = useState(null)

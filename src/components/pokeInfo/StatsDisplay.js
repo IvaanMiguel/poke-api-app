@@ -16,7 +16,9 @@ const StatBar = ({
   label = ''
 }) => {
   const pokemon = useSelector(state => state.pokemon)
-  const { color } = pokemon
+  const { species } = pokemon
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[species.name]
 
   const [barWidth, setBarWidth] = useState(0)
 
@@ -76,10 +78,10 @@ const StatsDisplay = () => {
   const [maxStat, setMaxStat] = useState()
 
   useEffect(() => {
-    setMaxStat(info.stats.reduce((maxValue, currentStat) => {
+    setMaxStat(info?.stats.reduce((maxValue, currentStat) => {
       return Math.max(maxValue, currentStat.base_stat)
     }, 0))
-  }, [])
+  }, [info])
 
   return (
     <VStack
@@ -88,7 +90,7 @@ const StatsDisplay = () => {
       p='$4'
       space='xs'
     >
-      { info.stats.map((stat, i) => (
+      { info?.stats.map((stat, i) => (
         <StatBar
           key={ i }
           value={ stat.base_stat }

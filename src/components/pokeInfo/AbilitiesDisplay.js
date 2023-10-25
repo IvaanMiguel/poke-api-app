@@ -10,11 +10,10 @@ import {
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { setShowAbilitySheet } from '../../redux/abilitySheet'
 import PokeAPI from 'pokedex-promise-v2'
 
 import { setAbilities as setPokemonAbilities, } from '../../redux/pokemon'
-import { setAbilitySheetId } from '../../redux/abilitySheet'
+import { setAbilitySheetId, setShowAbilitySheet } from '../../redux/abilitySheet'
 
 import Awaiting from '../Awaiting'
 import { getLocalizedString } from '../../utils'
@@ -24,12 +23,16 @@ const Pokedex = new PokeAPI()
 const AbilitiesDisplay = () => {
   const dispatch = useDispatch()
   const pokemon = useSelector(state => state.pokemon)
-  const { color, info } = pokemon
+  const { info, species } = pokemon
+  const pokedex = useSelector(state => state.pokedex)
+  const color = pokedex.colors[species.name]
 
   const [abilities, setAbilities] = useState()
 
   useEffect(() => {
     const fetchAbilities = async () => {
+      if (!info) return
+
       const abilitiesNames = info.abilities.map(ability => ability.ability.name)
       const abilitiesRes = await Pokedex.getAbilityByName(abilitiesNames)
 
@@ -38,7 +41,7 @@ const AbilitiesDisplay = () => {
     }
 
     fetchAbilities()
-  }, [])
+  }, [info])
 
   return (
     <VStack
@@ -66,7 +69,7 @@ const AbilitiesDisplay = () => {
                 bgColor={ `$${ color }${ pressed ? '400' : hovered ? '300' : '200' }` }
                 alignItems='center'
               >
-                { info.abilities[i].is_hidden ? (
+                { info.abilities[i]?.is_hidden ? (
                   <Center
                     px='$3' py='$1'
                     bgColor={ `$${ color }800` }

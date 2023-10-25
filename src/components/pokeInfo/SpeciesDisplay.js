@@ -27,7 +27,7 @@ const SpeciesDisplay = () => {
         color='$warmGray500'
       >
         { (species.flavor_text_entries
-            .findLast(text => text.language.name === 'en')?.flavor_text || '')
+            ?.findLast(text => text.language.name === 'en')?.flavor_text || '')
             .replace(/[\n\f\r\t]/g, ' ') }
       </Text>
       <HStack space='md'>
@@ -47,7 +47,7 @@ const SpeciesDisplay = () => {
             color='$warmGray500'
             p='$2'
           >
-            { info.height / 10 } m
+            { info?.height / 10 } m
           </Text>
         </VStack>
         <VStack flexGrow={ 1 } space='xs'>
@@ -66,7 +66,7 @@ const SpeciesDisplay = () => {
             color='$warmGray500'
             p='$2'
           >
-            { info.weight / 10 } kg
+            { info?.weight / 10 } kg
           </Text>
         </VStack>
       </HStack>
